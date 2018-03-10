@@ -28,8 +28,8 @@ add_library( native-lib
              src/main/cpp/AudioManager.h
              src/main/cpp/logging_macros.h
              src/main/cpp/NativeAudioManagerBridge.cpp
-             src/main/cpp/SineGenerator.cpp
-             src/main/cpp/SineGenerator.h)
+             src/main/cpp/WavGenerator.cpp
+             src/main/cpp/WavGenerator.h)
 
 find_library( log-lib
               log )

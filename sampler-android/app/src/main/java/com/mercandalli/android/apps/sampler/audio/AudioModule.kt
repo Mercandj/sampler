@@ -6,7 +6,11 @@ class AudioModule constructor(private val context: Context) {
 
     @Suppress("ConstantConditionIf")
     fun provideAudioManager(): AudioManager {
-        return if (NativeAudioManager) NativeAudioManager() else SoundPoolAudioManager(context.assets)
+        return if (NativeAudioManager) {
+            NativeAudioManager(context)
+        } else {
+            SoundPoolAudioManager(context.assets)
+        }
     }
 
     companion object {
