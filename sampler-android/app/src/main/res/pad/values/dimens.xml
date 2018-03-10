@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pad_text_size">24sp</dimen>
+
+    <dimen name="pad_square_padding">12dp</dimen>
+    <dimen name="pad_square_text_padding">6dp</dimen>
+    <dimen name="pad_square_radius">4dp</dimen>
+    <dimen name="pad_square_stroke_width">2.4dp</dimen>
+    <dimen name="beatgrid_progress_stroke_width">4dp</dimen>
+</resources>
