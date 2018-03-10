@@ -7,12 +7,14 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var buttonA: UIButton!
     @IBOutlet weak var buttonB: UIButton!
+    @IBOutlet weak var buttonC: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         buttonA.addTarget(self, action: #selector(self.buttonActionA(_:)), for: .touchUpInside)
         buttonB.addTarget(self, action: #selector(self.buttonActionB(_:)), for: .touchUpInside)
+        buttonC.addTarget(self, action: #selector(self.buttonActionC(_:)), for: .touchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,6 +27,10 @@ class ViewController: UIViewController {
 
     @objc func buttonActionB(_ sender: UIButton!) {
         playSound(forResource: "assets/wav/shape-of-you/dpm_shape_of_you_a_melody_02", withExtension: "wav")
+    }
+
+    @objc func buttonActionC(_ sender: UIButton!) {
+        playSound(forResource: "assets/wav/shape-of-you/dpm_shape_of_you_a_melody_03", withExtension: "wav")
     }
 
     func playSound(forResource: String?, withExtension: String?) {
