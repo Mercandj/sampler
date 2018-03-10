@@ -14,7 +14,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        MainGraph.init(this)
         audioManager = MainGraph.get().provideAudioManager()
+        audioManager.load()
         squaresView = findViewById(R.id.activity_main_squares_view)
         squaresView.setOnSquareChangedListener(object : SquaresView.OnSquareChangedListener {
             override fun onSquareCheckedChanged(idButton: Int, isChecked: Boolean) {

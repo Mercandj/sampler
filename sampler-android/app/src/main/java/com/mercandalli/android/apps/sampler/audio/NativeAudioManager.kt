@@ -8,6 +8,10 @@ internal class NativeAudioManager internal constructor() : AudioManager {
         }
     }
 
+    override fun load() {
+
+    }
+
     override fun play() {
         nativePlay()
     }
