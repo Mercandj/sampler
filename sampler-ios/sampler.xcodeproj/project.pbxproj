@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB920C972054012500B073E4 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = AB920C962054012500B073E4 /* assets */; };
 		ABF1079020505E64009F9B0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF1078F20505E64009F9B0F /* AppDelegate.swift */; };
 		ABF1079220505E65009F9B0F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF1079120505E65009F9B0F /* ViewController.swift */; };
 		ABF1079520505E65009F9B0F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF1079320505E65009F9B0F /* Main.storyboard */; };
@@ -34,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB920C962054012500B073E4 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = sampler/Assets.xcassets/assets; sourceTree = "<group>"; };
+		AB920C9A2054047F00B073E4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ABF1078C20505E64009F9B0F /* sampler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sampler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF1078F20505E64009F9B0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABF1079120505E65009F9B0F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 		ABF1078320505E64009F9B0F = {
 			isa = PBXGroup;
 			children = (
+				AB920C9A2054047F00B073E4 /* README.md */,
+				AB920C962054012500B073E4 /* assets */,
 				ABF1078E20505E64009F9B0F /* sampler */,
 				ABF107A320505E65009F9B0F /* samplerTests */,
 				ABF107AE20505E65009F9B0F /* samplerUITests */,
@@ -232,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB920C972054012500B073E4 /* assets in Resources */,
 				ABF1079A20505E65009F9B0F /* LaunchScreen.storyboard in Resources */,
 				ABF1079720505E65009F9B0F /* Assets.xcassets in Resources */,
 				ABF1079520505E65009F9B0F /* Main.storyboard in Resources */,

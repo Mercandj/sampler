@@ -4,27 +4,31 @@ import AVFoundation
 var player: AVAudioPlayer?
 
 class ViewController: UIViewController {
-    
+
+    @IBOutlet weak var buttonA: UIButton!
+    @IBOutlet weak var buttonB: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
-        button.backgroundColor = .black
-        button.setTitle("A", for: .normal)
-        button.addTarget(self, action: #selector(self.buttonAction(_:)), for: .touchUpInside)
-        self.view.addSubview(button)
+
+        buttonA.addTarget(self, action: #selector(self.buttonActionA(_:)), for: .touchUpInside)
+        buttonB.addTarget(self, action: #selector(self.buttonActionB(_:)), for: .touchUpInside)
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    @objc func buttonAction(_ sender: UIButton!) {
-        print("Button tapped")
+
+    @objc func buttonActionA(_ sender: UIButton!) {
+        playSound(forResource: "assets/wav/shape-of-you/dpm_shape_of_you_a_melody_01", withExtension: "wav")
     }
-    
-    // https://stackoverflow.com/questions/32036146/how-to-play-a-sound-using-swift
-    func playSound() {
-        guard let url = Bundle.main.url(forResource: "soundName", withExtension: "mp3") else { return }
+
+    @objc func buttonActionB(_ sender: UIButton!) {
+        playSound(forResource: "assets/wav/shape-of-you/dpm_shape_of_you_a_melody_02", withExtension: "wav")
+    }
+
+    func playSound(forResource: String?, withExtension: String?) {
+        guard let url = Bundle.main.url(forResource: forResource, withExtension: withExtension) else { return }
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
