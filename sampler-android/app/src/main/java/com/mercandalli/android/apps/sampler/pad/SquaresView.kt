@@ -75,8 +75,6 @@ class SquaresView @JvmOverloads constructor(
     @FloatRange(from = 0.0, to = 1.0)
     private var mPrgressBeatgrid: Float = 0.toFloat()
 
-    private var mCurrentPointer: Pointer? = null
-
     /**
      * The [SquaresView.OnSquareChangedListener] to handle selection state.
      */
@@ -221,13 +219,11 @@ class SquaresView @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val action = event.action
+        val action = event.actionMasked
         var eventHandled = false
-
         when (action) {
-            MotionEvent.ACTION_DOWN -> eventHandled = handlePointerDown(event)
-
-            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> eventHandled = handlePointerUp()
+            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> eventHandled = handlePointerDown(event)
+            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> eventHandled = handlePointerUp(event)
         }
         return eventHandled
     }
@@ -236,40 +232,31 @@ class SquaresView @JvmOverloads constructor(
         val pointer = Pointer()
         pointer.x = event.x
         pointer.y = event.y
-
         val selectedButton = intersectSquareSelector(event)
         if (selectedButton != null) {
-            if (mCurrentPointer == null || selectedButton == mCurrentPointer!!.currentButton) {
-                mPressedSquares[selectedButton.x][selectedButton.y] = true
-
-                pointer.setCurrentButton(selectedButton)
-                mCurrentPointer = pointer
-                this.notifyListener(selectedButton, true)
-            } else {
-                mPressedSquares[mCurrentPointer!!.currentButton!!.x][mCurrentPointer!!.currentButton!!.y] = false
-                mPressedSquares[selectedButton.x][selectedButton.y] = true
-                pointer.setCurrentButton(selectedButton)
-                mCurrentPointer = pointer
-                this.notifyListener(selectedButton, true)
-            }
+            mPressedSquares[selectedButton.x][selectedButton.y] = true
+            pointer.setCurrentButton(selectedButton)
+            this.notifyListener(selectedButton, true)
             invalidate()
         }
         return true
     }
 
-    protected fun handlePointerUp(): Boolean {
-        if (mCurrentPointer != null) {
-            mPressedSquares[mCurrentPointer!!.currentButton!!.x][mCurrentPointer!!.currentButton!!.y] = false
-            this.notifyListener(mCurrentPointer!!.currentButton!!, false)
-            mCurrentPointer = null
+    protected fun handlePointerUp(event: MotionEvent): Boolean {
+        val intersectSquareSelector = intersectSquareSelector(event)
+        if (intersectSquareSelector != null) {
+            mPressedSquares[intersectSquareSelector.x][intersectSquareSelector.y] = false
+            this.notifyListener(intersectSquareSelector, false)
         }
         invalidate()
         return true
     }
 
     protected fun intersectSquareSelector(event: MotionEvent): Point? {
-        val pointerX = event.x
-        val pointerY = event.y
+        // get pointer index from the event object
+        val pointerIndex = event.actionIndex
+        val pointerX = event.getX(pointerIndex)
+        val pointerY = event.getY(pointerIndex)
 
         if (mRectBkg.contains(pointerX.toInt(), pointerY.toInt())) {
             val column = (pointerX - mRectBkg.left) / (mRectBkg.width() / NB_COLUMN)
@@ -323,18 +310,18 @@ class SquaresView @JvmOverloads constructor(
 
     companion object {
 
-        val BeatGridPreset_A = 2
-        val BeatGridPreset_B = 3
-        val BeatGridPreset_C = 4
-        val BeatGridPreset_D = 5
+        val BeatGridPreset_A = 1
+        val BeatGridPreset_B = 2
+        val BeatGridPreset_C = 3
+        val BeatGridPreset_D = 4
         val BeatGridPreset_E = 5
-        val BeatGridPreset_F = 5
-        val BeatGridPreset_G = 5
-        val BeatGridPreset_H = 5
-        val BeatGridPreset_I = 5
-        val BeatGridPreset_J = 5
-        val BeatGridPreset_K = 5
-        val BeatGridPreset_L = 5
+        val BeatGridPreset_F = 6
+        val BeatGridPreset_G = 7
+        val BeatGridPreset_H = 8
+        val BeatGridPreset_I = 9
+        val BeatGridPreset_J = 10
+        val BeatGridPreset_K = 11
+        val BeatGridPreset_L = 12
 
         internal val NB_LINE = 4
         internal val NB_COLUMN = 3

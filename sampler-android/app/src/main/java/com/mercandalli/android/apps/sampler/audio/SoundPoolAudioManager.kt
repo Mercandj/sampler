@@ -10,16 +10,18 @@ internal class SoundPoolAudioManager constructor(
 
     private val soundPool: SoundPool = SoundPool(20, android.media.AudioManager.STREAM_MUSIC, 0)
 
-    private var sound1Loaded: Boolean = false
-    private var sound1Slot: Int = 0
+    private var loaded = HashMap<Int, Boolean>()
+    private var slots = HashMap<String, Int>()
 
-    override fun load() {
-        sound1Slot = loadSound("wav/batterie-baguettes-1.wav")
+    override fun load(assetPaths: List<String>) {
+        for (assetPath in assetPaths) {
+            slots[assetPath] = loadSound(assetPath)
+        }
     }
 
-    override fun play() {
-        if (sound1Loaded) {
-            soundPool.play(sound1Slot, 1F, 1F, 1, 0, 1f)
+    override fun play(assetPath: String) {
+        if (loaded.containsKey(slots[assetPath]) && loaded[slots[assetPath]]!!) {
+            soundPool.play(slots[assetPath]!!, 1F, 1F, 1, 0, 1f)
         }
     }
 
@@ -27,7 +29,7 @@ internal class SoundPoolAudioManager constructor(
     private fun loadSound(strSound: String): Int {
         soundPool.setOnLoadCompleteListener(object : SoundPool.OnLoadCompleteListener {
             override fun onLoadComplete(soundPool: SoundPool?, sampleId: Int, status: Int) {
-                sound1Loaded = true
+                loaded[sampleId] = true
             }
         })
         try {

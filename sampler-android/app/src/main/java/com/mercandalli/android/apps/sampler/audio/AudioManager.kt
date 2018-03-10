@@ -1,7 +1,7 @@
 package com.mercandalli.android.apps.sampler.audio
 
 interface AudioManager {
-    fun load()
+    fun load(assetPaths: List<String>)
 
-    fun play()
+    fun play(assetPath: String)
 }
