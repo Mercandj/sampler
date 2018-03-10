@@ -16,6 +16,6 @@ Java_com_mercandalli_android_apps_sampler_audio_NativeAudioManager_nativePlay(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Play from C++";
-    audioManager->Play();
+    audioManager->setToneOn(true);
     return env->NewStringUTF(hello.c_str());
 }

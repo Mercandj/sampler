@@ -7,7 +7,6 @@ get_filename_component(OBOE_DIR
                        ${OBOE_RELATIVE_PATH}
                        ABSOLUTE)
 
-# If the Oboe library directory doesn't exist, clone it from github
 if ((NOT EXISTS ${OBOE_DIR}) OR
     (NOT EXISTS ${OBOE_DIR}/CMakeLists.txt))
     execute_process(COMMAND git clone
@@ -16,47 +15,26 @@ if ((NOT EXISTS ${OBOE_DIR}) OR
                     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..)
 endif()
 
-# Add the Oboe library as a subproject. Since Oboe is an out-of-tree source library we must also
-# specify a binary directory
 add_subdirectory(${OBOE_DIR} ./oboe)
-
-# Include the Oboe headers
 include_directories(${OBOE_DIR}/include)
 
-### END OBOE INCLUDE SECTION ###
-
-# Debug utilities
 set (DEBUG_UTILS_PATH "../../debug-utils")
 set (DEBUG_UTILS_SOURCES ${DEBUG_UTILS_PATH}/trace.cpp)
 include_directories(${DEBUG_UTILS_PATH})
-
-# Creates and names a library, sets it as either STATIC
-# or SHARED, and provides the relative paths to its source code.
-# You can define multiple libraries, and CMake builds them for you.
-# Gradle automatically packages shared libraries with your APK.
 
 add_library( native-lib
              SHARED
              src/main/cpp/AudioManager.cpp
              src/main/cpp/AudioManager.h
-             src/main/cpp/NativeAudioManagerBridge.cpp)
+             src/main/cpp/logging_macros.h
+             src/main/cpp/NativeAudioManagerBridge.cpp
+             src/main/cpp/SineGenerator.cpp
+             src/main/cpp/SineGenerator.h)
 
-find_library( # Sets the name of the path variable.
-              log-lib
-
-              # Specifies the name of the NDK library that
-              # you want CMake to locate.
+find_library( log-lib
               log )
 
-# Specifies libraries CMake should link to your target library. You
-# can link multiple libraries, such as libraries you define in this
-# build script, prebuilt third-party libraries, or system libraries.
-
-target_link_libraries( # Specifies the target library.
-                       native-lib
-
-                       # Links the target library to the log library
-                       # included in the NDK.
+target_link_libraries( native-lib
+                       android
                        ${log-lib}
-
-                        oboe)
+                       oboe)
