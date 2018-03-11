@@ -16,11 +16,17 @@ public:
 
     const void load(const char **filePaths, int nbFilePaths);
 
-    const void play(const char *filePath);
+    const void play(int id);
 
 private:
-    long currentPositionL = -1;
-    long currentPositionR = -1;
+    int lastPlayedId = 0;
+    long *currentPositionL;
+    long *currentPositionR;
+    int16_t **buffers;
+    long *sizes;
+    bool loaded = false;
+
+    long extractWav(const char *filePath, int id);
 };
 
 #endif /* SAMPLER_WAV_GENERATOR_H */

@@ -26,9 +26,8 @@ JNICALL
 Java_com_mercandalli_android_apps_sampler_audio_NativeAudioManager_nativePlay(
         JNIEnv *env,
         jobject /* this */,
-        jstring filePathJava) {
-    const char *filePath = env->GetStringUTFChars(filePathJava, 0);
-    audioManager->getWavGenerator()->play(filePath);
+        jint indexJava) {
+    audioManager->getWavGenerator()->play(indexJava);
 }
 
 }

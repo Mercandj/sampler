@@ -6,6 +6,8 @@ import java.io.*
 internal class NativeAudioManager internal constructor(
         private val context: Context) : AudioManager {
 
+    private val assetsFilePaths = ArrayList<String>()
+
     companion object {
         init {
             System.loadLibrary("native-lib")
@@ -13,15 +15,24 @@ internal class NativeAudioManager internal constructor(
     }
 
     override fun load(assetsFilePaths: List<String>) {
+        this.assetsFilePaths.clear()
+        this.assetsFilePaths.addAll(assetsFilePaths)
         val internalStoragePaths = copyAssetsOnInternalStorage(context, assetsFilePaths)
         nativeLoad(internalStoragePaths.toTypedArray())
     }
 
     override fun play(assetsFilePath: String) {
-        val internalStorageFilesDirAbsolutePath = context.filesDir.absolutePath
-        val outFile = File(internalStorageFilesDirAbsolutePath, assetsFilePath)
-        val internalStorageFilePath = outFile.absolutePath
-        nativePlay(internalStorageFilePath)
+        val id = extractId(assetsFilePath)
+        nativePlay(id)
+    }
+
+    private fun extractId(assetsFilePath: String): Int {
+        for (i in 0 until assetsFilePaths.count()) {
+            if (assetsFilePaths[i] == assetsFilePath) {
+                return i
+            }
+        }
+        throw IllegalStateException("Error, not found path: $assetsFilePath")
     }
 
     /**
@@ -76,5 +87,5 @@ internal class NativeAudioManager internal constructor(
     }
 
     private external fun nativeLoad(internalStoragePaths: Array<String>)
-    private external fun nativePlay(assetsFilePath: String)
+    private external fun nativePlay(index: Int)
 }
