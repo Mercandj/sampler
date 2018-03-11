@@ -26,45 +26,43 @@ static void extractWAV(const char *filePath) {
 WavGenerator::WavGenerator() {
 }
 
-void WavGenerator::setup(double frequency, int32_t frameRate) {
-    mFrameRate = frameRate;
-}
-
-void WavGenerator::setup(double frequency, int32_t frameRate, float amplitude) {
-    setup(frequency, frameRate);
-}
-
 void WavGenerator::render(int16_t *buffer, int channel, int32_t channelStride, int32_t numFrames) {
-    /*for (int i = 0, sampleIndex = 0; i < numFrames; i++) {
-        buffer[sampleIndex] = (buf[sampleIndex]);
-        sampleIndex += channelStride;
-    }*/
+    // TODO
 }
 
 void WavGenerator::render(float *buffer, int channel, int32_t channelCount, int32_t numFrames) {
+    if (currentPositionL < 0 || currentPositionR < 0) {
+        memset(buffer, 0, sizeof(float) * numFrames);
+        return;
+    }
     if (channel == 0) {
-        for (int i = 0, sampleIndex = 0; i < numFrames; i += 1) {
+        for (int i = 0, sampleIndex = 0; i < numFrames; i++) {
             buffer[sampleIndex] = shortToFloat(buf[currentPositionL]);
             sampleIndex += channelCount;
             currentPositionL += channelCount;
         }
-        if (2 * currentPositionL > size) {
-            currentPositionL = 0;
+        if (currentPositionL >= size) {
+            currentPositionL = -1;
         }
     } else {
-        for (int i = 0, sampleIndex = 0; i < numFrames; i += 1) {
+        for (int i = 0, sampleIndex = 0; i < numFrames; i++) {
             buffer[sampleIndex] = shortToFloat(buf[currentPositionR]);
             sampleIndex += channelCount;
             currentPositionR += channelCount;
         }
-        if (2 * currentPositionR > size) {
-            currentPositionR = 0;
+        if (currentPositionR >= size) {
+            currentPositionR = -1;
         }
     }
 }
 
-const void WavGenerator::load(const char *filePath) {
-    extractWAV(filePath);
+const void WavGenerator::load(const char **filePaths, int nbFilePaths) {
+    extractWAV(filePaths[0]);
+}
+
+const void WavGenerator::play(const char *filePath) {
+    currentPositionL = 0;
+    currentPositionR = 1;
 }
 
 static float shortToFloat(int16_t i) {

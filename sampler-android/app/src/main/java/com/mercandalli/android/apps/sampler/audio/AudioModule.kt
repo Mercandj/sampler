@@ -14,7 +14,7 @@ class AudioModule constructor(private val context: Context) {
     }
 
     companion object {
-        private const val NativeAudioManager = false
+        private const val NativeAudioManager = true
     }
 
 }

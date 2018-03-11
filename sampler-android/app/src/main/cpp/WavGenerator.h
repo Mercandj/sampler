@@ -10,21 +10,17 @@ public:
 
     ~WavGenerator() = default;
 
-    void setup(double frequency, int32_t frameRate);
-
-    void setup(double frequency, int32_t frameRate, float amplitude);
-
     void render(int16_t *buffer, int channel, int32_t channelStride, int32_t numFrames);
 
     void render(float *buffer, int channel, int32_t channelStride, int32_t numFrames);
 
-    const void load(const char* filePath);
+    const void load(const char **filePaths, int nbFilePaths);
+
+    const void play(const char *filePath);
 
 private:
-    int32_t mFrameRate;
-
-    long currentPositionL = 0;
-    long currentPositionR = 1;
+    long currentPositionL = -1;
+    long currentPositionR = -1;
 };
 
 #endif /* SAMPLER_WAV_GENERATOR_H */

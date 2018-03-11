@@ -1,10 +1,11 @@
 #ifndef __SAMPLE_ANDROID_DEBUG_H__
 #define __SAMPLE_ANDROID_DEBUG_H__
+
 #include <android/log.h>
 
 #if 1
 #ifndef MODULE_NAME
-#define MODULE_NAME  "AUDIO-APP"
+#define MODULE_NAME  "SAMPLER"
 #endif
 
 #define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, MODULE_NAME, __VA_ARGS__)

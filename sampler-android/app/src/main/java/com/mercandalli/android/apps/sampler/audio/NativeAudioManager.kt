@@ -12,13 +12,16 @@ internal class NativeAudioManager internal constructor(
         }
     }
 
-    override fun load(assetPaths: List<String>) {
-        val internalStoragePaths = copyAssetsOnInternalStorage(context, assetPaths)
+    override fun load(assetsFilePaths: List<String>) {
+        val internalStoragePaths = copyAssetsOnInternalStorage(context, assetsFilePaths)
         nativeLoad(internalStoragePaths.toTypedArray())
     }
 
-    override fun play(assetPath: String) {
-        nativePlay()
+    override fun play(assetsFilePath: String) {
+        val internalStorageFilesDirAbsolutePath = context.filesDir.absolutePath
+        val outFile = File(internalStorageFilesDirAbsolutePath, assetsFilePath)
+        val internalStorageFilePath = outFile.absolutePath
+        nativePlay(internalStorageFilePath)
     }
 
     /**
@@ -73,5 +76,5 @@ internal class NativeAudioManager internal constructor(
     }
 
     private external fun nativeLoad(internalStoragePaths: Array<String>)
-    private external fun nativePlay(): String
+    private external fun nativePlay(assetsFilePath: String)
 }

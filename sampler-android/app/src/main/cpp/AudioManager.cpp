@@ -20,7 +20,6 @@ void AudioManager::createPlaybackStream() {
     setupPlaybackStreamParameters(&builder);
     oboe::Result result = builder.openStream(&mPlayStream);
     if (result == oboe::Result::OK && mPlayStream != nullptr) {
-        mSampleRate = mPlayStream->getSampleRate();
         mFramesPerBurst = mPlayStream->getFramesPerBurst();
         int channelCount = mPlayStream->getChannelCount();
         if (channelCount != mChannelCount) {

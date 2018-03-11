@@ -1,8 +1,6 @@
 #include <jni.h>
-#include <string>
 #include <malloc.h>
 #include "AudioManager.h"
-#include "logging_macros.h"
 
 static AudioManager *audioManager = new AudioManager();
 
@@ -19,17 +17,18 @@ Java_com_mercandalli_android_apps_sampler_audio_NativeAudioManager_nativeLoad(
     for (int i = 0; i < nbFilePaths; i++) {
         jstring input = (jstring) (env->GetObjectArrayElement(internal_storage_paths_java, i));
         filePathsInput[i] = env->GetStringUTFChars(input, 0);
-        audioManager->getWavGenerator()->load(filePathsInput[i]);
     }
+    audioManager->getWavGenerator()->load(filePathsInput, nbFilePaths);
 }
 
-JNIEXPORT jstring
+JNIEXPORT void
 JNICALL
 Java_com_mercandalli_android_apps_sampler_audio_NativeAudioManager_nativePlay(
         JNIEnv *env,
-        jobject /* this */) {
-    std::string hello = "Play from C++";
-    return env->NewStringUTF(hello.c_str());
+        jobject /* this */,
+        jstring filePathJava) {
+    const char *filePath = env->GetStringUTFChars(filePathJava, 0);
+    audioManager->getWavGenerator()->play(filePath);
 }
 
 }
