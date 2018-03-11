@@ -3,5 +3,6 @@
 
     <color name="roll_pad_square_background">#212121</color>
     <color name="primary_color_deck_A">#FFEB3B</color>
+    <color name="primary_color_deck_B">#18FFFF</color>
     <color name="roll_pad_square_accent_inactive">#757575</color>
 </resources>

@@ -23,6 +23,8 @@ class SquaresView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+    private var texts = TEXT_BUTTONS_A
+
     /**
      * The measured width of the [SquaresView].
      */
@@ -156,7 +158,7 @@ class SquaresView @JvmOverloads constructor(
                 bottom = top + mHeightSquare
                 drawRect(canvas, left, top, right, bottom, column, line)
                 drawProgressBar(canvas, left, top, right, column, line, mPrgressBeatgrid)
-                canvas.drawText(TEXT_BUTTONS[column][line],
+                canvas.drawText(texts[column][line],
                         left + mSquareStrokeWidth.toFloat() + mSquareTextPadding.toFloat(),
                         bottom - mSquareStrokeWidth.toFloat() - mSquareTextPadding.toFloat() - mSquareInactiveAccentPaint.descent(),
                         if (mPressedSquares[column][line]) mSquareActiveAccentPaint else mSquareInactiveAccentPaint)
@@ -210,6 +212,11 @@ class SquaresView @JvmOverloads constructor(
         mSquareActiveAccentColor = accentActiveColor
         mSquareActiveAccentPaint.color = mSquareActiveAccentColor
         mSquareStrokeBackgroundActivePaint.color = mSquareActiveAccentColor
+        invalidate()
+    }
+
+    fun setTexts(texts: Array<Array<String>>) {
+        this.texts = texts
         invalidate()
     }
 
@@ -310,18 +317,18 @@ class SquaresView @JvmOverloads constructor(
 
     companion object {
 
-        val BeatGridPreset_A = 1
-        val BeatGridPreset_B = 2
-        val BeatGridPreset_C = 3
-        val BeatGridPreset_D = 4
-        val BeatGridPreset_E = 5
-        val BeatGridPreset_F = 6
-        val BeatGridPreset_G = 7
-        val BeatGridPreset_H = 8
-        val BeatGridPreset_I = 9
-        val BeatGridPreset_J = 10
-        val BeatGridPreset_K = 11
-        val BeatGridPreset_L = 12
+        val BeatGridPreset_A = 0
+        val BeatGridPreset_B = 1
+        val BeatGridPreset_C = 2
+        val BeatGridPreset_D = 3
+        val BeatGridPreset_E = 4
+        val BeatGridPreset_F = 5
+        val BeatGridPreset_G = 6
+        val BeatGridPreset_H = 7
+        val BeatGridPreset_I = 8
+        val BeatGridPreset_J = 9
+        val BeatGridPreset_K = 10
+        val BeatGridPreset_L = 11
 
         internal val NB_LINE = 4
         internal val NB_COLUMN = 3
@@ -329,7 +336,12 @@ class SquaresView @JvmOverloads constructor(
         /**
          * The string values for the BEATGRID FX
          */
-        private val TEXT_BUTTONS = arrayOf(arrayOf("A", "D", "G", "J"), arrayOf("B", "E", "H", "K"), arrayOf("C", "F", "I", "L"))
+         val TEXT_BUTTONS_A = arrayOf(arrayOf("A-0", "A-3", "A-6", "A-9"), arrayOf("A-1", "A-4", "A-7", "A-10"), arrayOf("A-2", "A-5", "A-8", "A-11"))
+
+        /**
+         * The string values for the BEATGRID FX
+         */
+         val TEXT_BUTTONS_B = arrayOf(arrayOf("B-0", "B-3", "B-6", "B-9"), arrayOf("B-1", "B-4", "B-7", "B-10"), arrayOf("B-2", "B-5", "B-8", "B-11"))
 
         /**
          * The id values for the BEATGRID FX
