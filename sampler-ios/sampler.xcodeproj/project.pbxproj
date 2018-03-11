@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AB920C972054012500B073E4 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = AB920C962054012500B073E4 /* assets */; };
+		ABE0CD1C20559A9F004FB540 /* AudioManagerNative.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE0CD1A20559A9F004FB540 /* AudioManagerNative.cpp */; };
+		ABE0CD1E20559C80004FB540 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE0CD1D20559C80004FB540 /* AudioManager.swift */; };
+		ABE0CD212055A2B7004FB540 /* AudioManagerBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = ABE0CD202055A2B7004FB540 /* AudioManagerBridge.mm */; };
 		ABF1079020505E64009F9B0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF1078F20505E64009F9B0F /* AppDelegate.swift */; };
 		ABF1079220505E65009F9B0F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF1079120505E65009F9B0F /* ViewController.swift */; };
 		ABF1079520505E65009F9B0F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF1079320505E65009F9B0F /* Main.storyboard */; };
@@ -37,6 +40,12 @@
 /* Begin PBXFileReference section */
 		AB920C962054012500B073E4 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = sampler/Assets.xcassets/assets; sourceTree = "<group>"; };
 		AB920C9A2054047F00B073E4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		ABE0CD1A20559A9F004FB540 /* AudioManagerNative.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioManagerNative.cpp; sourceTree = "<group>"; };
+		ABE0CD1B20559A9F004FB540 /* AudioManagerNative.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioManagerNative.h; sourceTree = "<group>"; };
+		ABE0CD1D20559C80004FB540 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		ABE0CD202055A2B7004FB540 /* AudioManagerBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioManagerBridge.mm; sourceTree = "<group>"; };
+		ABE0CD222055A301004FB540 /* AudioManagerBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioManagerBridge.h; sourceTree = "<group>"; };
+		ABE0CD252055A492004FB540 /* sampler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sampler-Bridging-Header.h"; sourceTree = "<group>"; };
 		ABF1078C20505E64009F9B0F /* sampler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sampler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF1078F20505E64009F9B0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABF1079120505E65009F9B0F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +86,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ABE0CD1820559A6A004FB540 /* cpp */ = {
+			isa = PBXGroup;
+			children = (
+				ABE0CD1A20559A9F004FB540 /* AudioManagerNative.cpp */,
+				ABE0CD1B20559A9F004FB540 /* AudioManagerNative.h */,
+			);
+			path = cpp;
+			sourceTree = "<group>";
+		};
+		ABE0CD1F2055A291004FB540 /* objc */ = {
+			isa = PBXGroup;
+			children = (
+				ABE0CD202055A2B7004FB540 /* AudioManagerBridge.mm */,
+				ABE0CD222055A301004FB540 /* AudioManagerBridge.h */,
+				ABE0CD252055A492004FB540 /* sampler-Bridging-Header.h */,
+			);
+			path = objc;
+			sourceTree = "<group>";
+		};
 		ABF1078320505E64009F9B0F = {
 			isa = PBXGroup;
 			children = (
@@ -102,7 +130,10 @@
 		ABF1078E20505E64009F9B0F /* sampler */ = {
 			isa = PBXGroup;
 			children = (
+				ABE0CD1F2055A291004FB540 /* objc */,
+				ABE0CD1820559A6A004FB540 /* cpp */,
 				ABF1078F20505E64009F9B0F /* AppDelegate.swift */,
+				ABE0CD1D20559C80004FB540 /* AudioManager.swift */,
 				ABF1079120505E65009F9B0F /* ViewController.swift */,
 				ABF1079320505E65009F9B0F /* Main.storyboard */,
 				ABF1079620505E65009F9B0F /* Assets.xcassets */,
@@ -198,6 +229,7 @@
 				TargetAttributes = {
 					ABF1078B20505E64009F9B0F = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					ABF1079F20505E65009F9B0F = {
@@ -265,7 +297,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABE0CD1C20559A9F004FB540 /* AudioManagerNative.cpp in Sources */,
 				ABF1079220505E65009F9B0F /* ViewController.swift in Sources */,
+				ABE0CD212055A2B7004FB540 /* AudioManagerBridge.mm in Sources */,
+				ABE0CD1E20559C80004FB540 /* AudioManager.swift in Sources */,
 				ABF1079020505E64009F9B0F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,12 +467,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 58H4Z8YFD3;
 				INFOPLIST_FILE = sampler/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mercandalli.ios.apps.sampler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "sampler/objc/sampler-Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "sampler/objc/sampler-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -447,12 +486,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 58H4Z8YFD3;
 				INFOPLIST_FILE = sampler/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mercandalli.ios.apps.sampler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "sampler/objc/sampler-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
