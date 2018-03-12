@@ -74,8 +74,7 @@ class SquaresView @JvmOverloads constructor(
 
     protected val mPressedSquares: Array<BooleanArray>
 
-    @FloatRange(from = 0.0, to = 1.0)
-    private var mPrgressBeatgrid: Float = 0.toFloat()
+    private var mPrgressBeatgrid: Array<FloatArray>
 
     /**
      * The [SquaresView.OnSquareChangedListener] to handle selection state.
@@ -102,6 +101,7 @@ class SquaresView @JvmOverloads constructor(
         myTypeface = Typeface.createFromAsset(getContext().assets, "fonts/$DEFAULT_FONT")
 
         mPressedSquares = Array(NB_COLUMN) { BooleanArray(NB_LINE) }
+        mPrgressBeatgrid = Array(NB_COLUMN) { FloatArray(NB_LINE) }
 
         mSquareBackgroundPaint = Paint()
         mSquareBackgroundPaint.color = mSquareBackgroundColor
@@ -176,7 +176,7 @@ class SquaresView @JvmOverloads constructor(
                     mSquareStrokeBackgroundInactivePaint)
     }
 
-    protected fun drawProgressBar(canvas: Canvas, left: Float, top: Float, right: Float, column: Int, line: Int, progress: Float) {
+    protected fun drawProgressBar(canvas: Canvas, left: Float, top: Float, right: Float, column: Int, line: Int, progress: Array<FloatArray>) {
         val leftPosition = left + mSquareStrokeWidth.toFloat() + mSquareTextPadding.toFloat() + mProgressStrokeWidth / 2f
         val rightPosition = right - mSquareStrokeWidth.toFloat() - mSquareTextPadding.toFloat() - mProgressStrokeWidth / 2f
         val topPosition = top + mSquareStrokeWidth.toFloat() + mSquareTextPadding.toFloat() + mProgressStrokeWidth / 2f
@@ -188,8 +188,8 @@ class SquaresView @JvmOverloads constructor(
                 topPosition)
         canvas.drawLine(mTempRect.left, mTempRect.top, mTempRect.right, mTempRect.bottom, mSquareInactiveAccentPaint)
 
-        if (mPressedSquares[column][line]) {
-            mTempRect.right = mTempRect.left + mTempRect.width() * progress
+        if (progress[column][line] > 0f) {
+            mTempRect.right = mTempRect.left + mTempRect.width() * progress[column][line]
             canvas.drawLine(mTempRect.left, mTempRect.top, mTempRect.right, mTempRect.bottom, mSquareActiveAccentPaint)
         }
     }
@@ -220,7 +220,7 @@ class SquaresView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun setPrgressBeatgrid(@FloatRange(from = 0.0, to = 1.0) prgressBeatgrid: Float) {
+    fun setPrgressBeatgrid(@FloatRange(from = 0.0, to = 1.0) prgressBeatgrid: Array<FloatArray>) {
         mPrgressBeatgrid = prgressBeatgrid
         invalidate()
     }
@@ -289,7 +289,9 @@ class SquaresView @JvmOverloads constructor(
      */
     private fun notifyListener(coordinateButton: Point, isChecked: Boolean) {
         if (mOnSquareChangedListener != null) {
-            mOnSquareChangedListener!!.onSquareCheckedChanged(BEAT_GRID_VALUES[coordinateButton.x][coordinateButton.y], isChecked)
+            mOnSquareChangedListener!!.onSquareCheckedChanged(
+                    BEAT_GRID_VALUES[coordinateButton.x][coordinateButton.y],
+                    coordinateButton.x, coordinateButton.y, isChecked)
         }
     }
 
@@ -312,7 +314,7 @@ class SquaresView @JvmOverloads constructor(
          *
          * @param idButton : the id of the beat grid schema.
          */
-        fun onSquareCheckedChanged(idButton: Int, isChecked: Boolean)
+        fun onSquareCheckedChanged(idButton: Int, x: Int, y: Int, isChecked: Boolean)
     }
 
     companion object {
@@ -336,12 +338,12 @@ class SquaresView @JvmOverloads constructor(
         /**
          * The string values for the BEATGRID FX
          */
-         val TEXT_BUTTONS_A = arrayOf(arrayOf("A-0", "A-3", "A-6", "A-9"), arrayOf("A-1", "A-4", "A-7", "A-10"), arrayOf("A-2", "A-5", "A-8", "A-11"))
+        val TEXT_BUTTONS_A = arrayOf(arrayOf("A-0", "A-3", "A-6", "A-9"), arrayOf("A-1", "A-4", "A-7", "A-10"), arrayOf("A-2", "A-5", "A-8", "A-11"))
 
         /**
          * The string values for the BEATGRID FX
          */
-         val TEXT_BUTTONS_B = arrayOf(arrayOf("B-0", "B-3", "B-6", "B-9"), arrayOf("B-1", "B-4", "B-7", "B-10"), arrayOf("B-2", "B-5", "B-8", "B-11"))
+        val TEXT_BUTTONS_B = arrayOf(arrayOf("B-0", "B-3", "B-6", "B-9"), arrayOf("B-1", "B-4", "B-7", "B-10"), arrayOf("B-2", "B-5", "B-8", "B-11"))
 
         /**
          * The id values for the BEATGRID FX

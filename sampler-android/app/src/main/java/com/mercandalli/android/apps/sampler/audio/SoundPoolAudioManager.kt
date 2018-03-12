@@ -13,15 +13,15 @@ internal class SoundPoolAudioManager constructor(
     private var loaded = HashMap<Int, Boolean>()
     private var slots = HashMap<String, Int>()
 
-    override fun load(assetPaths: List<String>) {
-        for (assetPath in assetPaths) {
-            slots[assetPath] = loadSound(assetPath)
+    override fun load(assetsFilePaths: List<String>) {
+        for (assetsFilePath in assetsFilePaths) {
+            slots[assetsFilePath] = loadSound(assetsFilePath)
         }
     }
 
-    override fun play(assetPath: String) {
-        if (loaded.containsKey(slots[assetPath]) && loaded[slots[assetPath]]!!) {
-            soundPool.play(slots[assetPath]!!, 1F, 1F, 1, 0, 1f)
+    override fun play(assetsFilePath: String) {
+        if (loaded.containsKey(slots[assetsFilePath]) && loaded[slots[assetsFilePath]]!!) {
+            soundPool.play(slots[assetsFilePath]!!, 1F, 1F, 1, 0, 1f)
         }
     }
 
