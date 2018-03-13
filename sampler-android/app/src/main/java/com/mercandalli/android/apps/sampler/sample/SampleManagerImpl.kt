@@ -9,11 +9,11 @@ internal class SampleManagerImpl : SampleManager {
     @SampleManager.Companion.Deck
     private var currentDeck = DECK_A
 
-    override fun getCurrentDeck(): Long {
+    override fun getCurrentDeck(): Int {
         return currentDeck
     }
 
-    override fun setCurrentDeck(deck: Long) {
+    override fun setCurrentDeck(deck: Int) {
         currentDeck = deck
     }
 

@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         onDeckSelected(sampleManager.getCurrentDeck())
     }
 
-    private fun onDeckSelected(@SampleManager.Companion.Deck currentDeck: Long) {
+    private fun onDeckSelected(@SampleManager.Companion.Deck currentDeck: Int) {
         when (currentDeck) {
             DECK_A -> {
                 squaresView.setStyle(deckAColor)

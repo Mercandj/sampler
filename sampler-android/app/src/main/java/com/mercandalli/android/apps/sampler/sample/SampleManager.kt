@@ -5,9 +5,9 @@ import android.support.annotation.IntDef
 interface SampleManager {
 
     @Deck
-    fun getCurrentDeck(): Long
+    fun getCurrentDeck(): Int
 
-    fun setCurrentDeck(@Deck deck: Long)
+    fun setCurrentDeck(@Deck deck: Int)
 
     fun getSamples(): List<String>
 
@@ -21,8 +21,8 @@ interface SampleManager {
         @Retention(AnnotationRetention.SOURCE)
         annotation class Deck
 
-        const val DECK_A = 0L
-        const val DECK_B = 1L
+        const val DECK_A = 0
+        const val DECK_B = 1
 
         val deckASamples = listOf(
                 "wav/shape-of-you/dpm_shape_of_you_a_bass_01.wav",
