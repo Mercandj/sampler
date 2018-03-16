@@ -6,7 +6,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var buttonB: UIButton!
     @IBOutlet weak var buttonC: UIButton!
 
-    var audioManager = AudioManagerImpl()
+    var audioManager = ApplicationGraph.instance.getAudioManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()

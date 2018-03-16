@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB7E1D9C205C6F9C00DCDFAC /* ApplicationGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7E1D9B205C6F9C00DCDFAC /* ApplicationGraph.swift */; };
 		AB920C972054012500B073E4 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = AB920C962054012500B073E4 /* assets */; };
 		AB935056205688CC00CEDBCC /* Sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB935055205688CC00CEDBCC /* Sample.swift */; };
 		AB93505820568C3700CEDBCC /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB93505720568C3700CEDBCC /* AudioManager.swift */; };
 		ABE0CD1C20559A9F004FB540 /* AudioManagerNative.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE0CD1A20559A9F004FB540 /* AudioManagerNative.cpp */; };
-		ABE0CD1E20559C80004FB540 /* AudioManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE0CD1D20559C80004FB540 /* AudioManagerImpl.swift */; };
+		ABE0CD1E20559C80004FB540 /* AudioManagerAVImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE0CD1D20559C80004FB540 /* AudioManagerAVImpl.swift */; };
 		ABE0CD212055A2B7004FB540 /* AudioManagerBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = ABE0CD202055A2B7004FB540 /* AudioManagerBridge.mm */; };
 		ABF1079020505E64009F9B0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF1078F20505E64009F9B0F /* AppDelegate.swift */; };
 		ABF1079220505E65009F9B0F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF1079120505E65009F9B0F /* ViewController.swift */; };
@@ -20,6 +21,7 @@
 		ABF1079A20505E65009F9B0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF1079820505E65009F9B0F /* LaunchScreen.storyboard */; };
 		ABF107A520505E65009F9B0F /* samplerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF107A420505E65009F9B0F /* samplerTests.swift */; };
 		ABF107B020505E65009F9B0F /* samplerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF107AF20505E65009F9B0F /* samplerUITests.swift */; };
+		ABFC616B205C6E350076F57C /* AudioModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFC616A205C6E350076F57C /* AudioModule.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,13 +42,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB7E1D9B205C6F9C00DCDFAC /* ApplicationGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationGraph.swift; sourceTree = "<group>"; };
 		AB920C962054012500B073E4 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = sampler/Assets.xcassets/assets; sourceTree = "<group>"; };
 		AB920C9A2054047F00B073E4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AB935055205688CC00CEDBCC /* Sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample.swift; sourceTree = "<group>"; };
 		AB93505720568C3700CEDBCC /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		ABE0CD1A20559A9F004FB540 /* AudioManagerNative.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioManagerNative.cpp; sourceTree = "<group>"; };
 		ABE0CD1B20559A9F004FB540 /* AudioManagerNative.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioManagerNative.h; sourceTree = "<group>"; };
-		ABE0CD1D20559C80004FB540 /* AudioManagerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManagerImpl.swift; sourceTree = "<group>"; };
+		ABE0CD1D20559C80004FB540 /* AudioManagerAVImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManagerAVImpl.swift; sourceTree = "<group>"; };
 		ABE0CD202055A2B7004FB540 /* AudioManagerBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioManagerBridge.mm; sourceTree = "<group>"; };
 		ABE0CD222055A301004FB540 /* AudioManagerBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioManagerBridge.h; sourceTree = "<group>"; };
 		ABE0CD252055A492004FB540 /* sampler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sampler-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 		ABF107AB20505E65009F9B0F /* samplerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = samplerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF107AF20505E65009F9B0F /* samplerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = samplerUITests.swift; sourceTree = "<group>"; };
 		ABF107B120505E65009F9B0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ABFC616A205C6E350076F57C /* AudioModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioModule.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,12 +94,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB7E1D9A205C6F8200DCDFAC /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				AB7E1D9B205C6F9C00DCDFAC /* ApplicationGraph.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		AB935054205688AE00CEDBCC /* swift */ = {
 			isa = PBXGroup;
 			children = (
-				AB93505720568C3700CEDBCC /* AudioManager.swift */,
-				ABE0CD1D20559C80004FB540 /* AudioManagerImpl.swift */,
-				AB935055205688CC00CEDBCC /* Sample.swift */,
+				AB7E1D9A205C6F8200DCDFAC /* Application */,
+				ABFC6168205C6DEB0076F57C /* Audio */,
+				ABFC6169205C6E090076F57C /* Sample */,
 			);
 			path = swift;
 			sourceTree = "<group>";
@@ -173,6 +185,24 @@
 				ABF107B120505E65009F9B0F /* Info.plist */,
 			);
 			path = samplerUITests;
+			sourceTree = "<group>";
+		};
+		ABFC6168205C6DEB0076F57C /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				AB93505720568C3700CEDBCC /* AudioManager.swift */,
+				ABE0CD1D20559C80004FB540 /* AudioManagerAVImpl.swift */,
+				ABFC616A205C6E350076F57C /* AudioModule.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		ABFC6169205C6E090076F57C /* Sample */ = {
+			isa = PBXGroup;
+			children = (
+				AB935055205688CC00CEDBCC /* Sample.swift */,
+			);
+			path = Sample;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,8 +345,10 @@
 				AB93505820568C3700CEDBCC /* AudioManager.swift in Sources */,
 				AB935056205688CC00CEDBCC /* Sample.swift in Sources */,
 				ABF1079220505E65009F9B0F /* ViewController.swift in Sources */,
+				ABFC616B205C6E350076F57C /* AudioModule.swift in Sources */,
+				AB7E1D9C205C6F9C00DCDFAC /* ApplicationGraph.swift in Sources */,
 				ABE0CD212055A2B7004FB540 /* AudioManagerBridge.mm in Sources */,
-				ABE0CD1E20559C80004FB540 /* AudioManagerImpl.swift in Sources */,
+				ABE0CD1E20559C80004FB540 /* AudioManagerAVImpl.swift in Sources */,
 				ABF1079020505E64009F9B0F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

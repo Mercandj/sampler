@@ -1,7 +1,7 @@
 import Foundation
 import AVFoundation
 
-class AudioManagerImpl: AudioManager {
+class AudioManagerAVImpl: AudioManager {
 
     var players = Array<AVAudioPlayer>()
     var samples: Array<Sample>?
