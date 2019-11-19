@@ -1,11 +1,10 @@
 package com.mercandalli.android.apps.sampler.main
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.widget.TextView
 import com.mercandalli.android.apps.sampler.R
-import com.mercandalli.android.apps.sampler.audio.AudioManager
 import com.mercandalli.android.apps.sampler.pad.SquaresView
 import com.mercandalli.android.apps.sampler.sample.SampleManager
 import com.mercandalli.android.apps.sampler.sample.SampleManager.Companion.DECK_A
@@ -13,8 +12,8 @@ import com.mercandalli.android.apps.sampler.sample.SampleManager.Companion.DECK_
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var audioManager: AudioManager
-    private lateinit var sampleManager: SampleManager
+    private val audioManager by lazy { MainGraph.getAudioManager() }
+    private val sampleManager by lazy { MainGraph.getSampleManager() }
     private lateinit var squaresView: SquaresView
     private lateinit var buttonSelectionA: TextView
     private lateinit var buttonSelectionB: TextView
@@ -36,8 +35,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         MainGraph.init(this)
-        audioManager = MainGraph.get().provideAudioManager()
-        sampleManager = MainGraph.get().provideSampleManager()
         audioManager.load(sampleManager.getSamples())
 
         deckAColor = ContextCompat.getColor(this, R.color.primary_color_deck_A)

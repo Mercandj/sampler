@@ -6,18 +6,12 @@ import com.mercandalli.android.apps.sampler.audio.AudioModule
 import com.mercandalli.android.apps.sampler.sample.SampleManager
 import com.mercandalli.android.apps.sampler.sample.SampleModule
 
-class MainGraph private constructor(context: Context) {
+class MainGraph private constructor(
+    context: Context
+) {
 
     private val audioManager: AudioManager = AudioModule(context).provideAudioManager()
     private val sampleManager: SampleManager = SampleModule().provideSampleManager()
-
-    fun provideAudioManager(): AudioManager {
-        return audioManager
-    }
-
-    fun provideSampleManager(): SampleManager {
-        return sampleManager
-    }
 
     companion object {
         private var mainGraph: MainGraph? = null
@@ -30,10 +24,12 @@ class MainGraph private constructor(context: Context) {
             return mainGraph!!
         }
 
-        @JvmStatic
-        fun get(): MainGraph {
-            return mainGraph!!
+        fun getAudioManager(): AudioManager {
+            return mainGraph!!.audioManager
+        }
+
+        fun getSampleManager(): SampleManager {
+            return mainGraph!!.sampleManager
         }
     }
-
 }

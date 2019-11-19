@@ -2,7 +2,9 @@ package com.mercandalli.android.apps.sampler.audio
 
 import android.content.Context
 
-class AudioModule constructor(private val context: Context) {
+class AudioModule(
+    private val context: Context
+) {
 
     @Suppress("ConstantConditionIf")
     fun provideAudioManager(): AudioManager {
@@ -16,5 +18,4 @@ class AudioModule constructor(private val context: Context) {
     companion object {
         private const val NativeAudioManager = false
     }
-
 }

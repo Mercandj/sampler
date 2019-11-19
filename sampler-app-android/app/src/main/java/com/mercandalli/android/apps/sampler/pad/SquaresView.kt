@@ -7,9 +7,9 @@ import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Typeface
-import android.support.annotation.ColorInt
-import android.support.annotation.FloatRange
-import android.support.v4.content.ContextCompat
+import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -20,7 +20,9 @@ import com.mercandalli.android.apps.sampler.R
  * A custom view composed with square buttons.
  */
 class SquaresView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
     private var texts = TEXT_BUTTONS_A
@@ -159,9 +161,9 @@ class SquaresView @JvmOverloads constructor(
                 drawRect(canvas, left, top, right, bottom, column, line)
                 drawProgressBar(canvas, left, top, right, column, line, mPrgressBeatgrid)
                 canvas.drawText(texts[column][line],
-                        left + mSquareStrokeWidth.toFloat() + mSquareTextPadding.toFloat(),
-                        bottom - mSquareStrokeWidth.toFloat() - mSquareTextPadding.toFloat() - mSquareInactiveAccentPaint.descent(),
-                        if (mPressedSquares[column][line]) mSquareActiveAccentPaint else mSquareInactiveAccentPaint)
+                    left + mSquareStrokeWidth.toFloat() + mSquareTextPadding.toFloat(),
+                    bottom - mSquareStrokeWidth.toFloat() - mSquareTextPadding.toFloat() - mSquareInactiveAccentPaint.descent(),
+                    if (mPressedSquares[column][line]) mSquareActiveAccentPaint else mSquareInactiveAccentPaint)
             }
         }
     }
@@ -170,10 +172,10 @@ class SquaresView @JvmOverloads constructor(
         mTempRect.set(left, top, right, bottom)
         canvas.drawRoundRect(mTempRect, mSquareRadius.toFloat(), mSquareRadius.toFloat(), mSquareBackgroundPaint)
         canvas.drawRoundRect(mTempRect, mSquareRadius.toFloat(), mSquareRadius.toFloat(),
-                if (mPressedSquares[column][line])
-                    mSquareStrokeBackgroundActivePaint
-                else
-                    mSquareStrokeBackgroundInactivePaint)
+            if (mPressedSquares[column][line])
+                mSquareStrokeBackgroundActivePaint
+            else
+                mSquareStrokeBackgroundInactivePaint)
     }
 
     protected fun drawProgressBar(canvas: Canvas, left: Float, top: Float, right: Float, column: Int, line: Int, progress: Array<FloatArray>) {
@@ -183,9 +185,9 @@ class SquaresView @JvmOverloads constructor(
 
         val width = (rightPosition - leftPosition) / 2
         mTempRect.set(leftPosition,
-                topPosition,
-                leftPosition + width,
-                topPosition)
+            topPosition,
+            leftPosition + width,
+            topPosition)
         canvas.drawLine(mTempRect.left, mTempRect.top, mTempRect.right, mTempRect.bottom, mSquareInactiveAccentPaint)
 
         if (progress[column][line] > 0f) {
@@ -290,8 +292,8 @@ class SquaresView @JvmOverloads constructor(
     private fun notifyListener(coordinateButton: Point, isChecked: Boolean) {
         if (mOnSquareChangedListener != null) {
             mOnSquareChangedListener!!.onSquareCheckedChanged(
-                    BEAT_GRID_VALUES[coordinateButton.x][coordinateButton.y],
-                    coordinateButton.x, coordinateButton.y, isChecked)
+                BEAT_GRID_VALUES[coordinateButton.x][coordinateButton.y],
+                coordinateButton.x, coordinateButton.y, isChecked)
         }
     }
 

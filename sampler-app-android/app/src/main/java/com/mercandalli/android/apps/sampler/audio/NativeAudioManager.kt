@@ -3,8 +3,9 @@ package com.mercandalli.android.apps.sampler.audio
 import android.content.Context
 import java.io.*
 
-internal class NativeAudioManager internal constructor(
-        private val context: Context) : AudioManager {
+internal class NativeAudioManager(
+    private val context: Context
+) : AudioManager {
 
     private val assetsFilePaths = ArrayList<String>()
 
@@ -39,8 +40,8 @@ internal class NativeAudioManager internal constructor(
      * Returns the list of internal storage paths.
      */
     private fun copyAssetsOnInternalStorage(
-            context: Context,
-            assetsFilePaths: List<String>): ArrayList<String> {
+        context: Context,
+        assetsFilePaths: List<String>): ArrayList<String> {
         val assetManager = context.applicationContext.assets
         val internalStorageFilesDirAbsolutePath = context.filesDir.absolutePath
         val result = ArrayList<String>()
