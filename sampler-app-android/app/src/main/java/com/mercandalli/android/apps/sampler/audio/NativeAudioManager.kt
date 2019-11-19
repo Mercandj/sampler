@@ -1,7 +1,11 @@
 package com.mercandalli.android.apps.sampler.audio
 
 import android.content.Context
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 
 internal class NativeAudioManager(
     private val context: Context
@@ -27,6 +31,10 @@ internal class NativeAudioManager(
         nativePlay(id)
     }
 
+    override fun stop(assetsFilePath: String) {
+        // TODO
+    }
+
     private fun extractId(assetsFilePath: String): Int {
         for (i in 0 until assetsFilePaths.count()) {
             if (assetsFilePaths[i] == assetsFilePath) {
@@ -41,7 +49,8 @@ internal class NativeAudioManager(
      */
     private fun copyAssetsOnInternalStorage(
         context: Context,
-        assetsFilePaths: List<String>): ArrayList<String> {
+        assetsFilePaths: List<String>
+    ): ArrayList<String> {
         val assetManager = context.applicationContext.assets
         val internalStorageFilesDirAbsolutePath = context.filesDir.absolutePath
         val result = ArrayList<String>()
@@ -81,8 +90,9 @@ internal class NativeAudioManager(
         val buffer = ByteArray(1024)
         while (true) {
             val bytesRead = inputStream.read(buffer)
-            if (bytesRead == -1)
+            if (bytesRead == -1) {
                 break
+            }
             out.write(buffer, 0, bytesRead)
         }
     }

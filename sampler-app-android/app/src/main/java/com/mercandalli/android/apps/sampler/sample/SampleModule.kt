@@ -5,5 +5,4 @@ class SampleModule {
     fun provideSampleManager(): SampleManager {
         return SampleManagerImpl()
     }
-
 }

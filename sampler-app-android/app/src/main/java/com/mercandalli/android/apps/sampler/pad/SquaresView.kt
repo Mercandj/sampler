@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.sampler.pad
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -7,13 +8,12 @@ import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Typeface
-import androidx.annotation.ColorInt
-import androidx.annotation.FloatRange
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-
+import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
+import androidx.core.content.ContextCompat
 import com.mercandalli.android.apps.sampler.R
 
 /**
@@ -30,119 +30,119 @@ class SquaresView @JvmOverloads constructor(
     /**
      * The measured width of the [SquaresView].
      */
-    private var mWidth: Int = 0
+    private var widthInternal: Int = 0
 
     /**
      * The measured height of the  [SquaresView].
      */
-    private var mHeight: Int = 0
+    private var heightInternal: Int = 0
 
     /**
      * The width of one square.
      */
-    private var mWidthSquare: Float = 0.toFloat()
+    private var widthSquare: Float = 0.toFloat()
 
     /**
      * The height of one square.
      */
-    private var mHeightSquare: Float = 0.toFloat()
+    private var heightSquare: Float = 0.toFloat()
 
     /**
      * TextIndicators (captions)
      */
-    protected val mSquareActiveAccentPaint: Paint
-    protected val mSquareInactiveAccentPaint: Paint
-    protected var myTypeface: Typeface? = null
-    protected var mTextSize: Int = 0
-    protected var mSquareInactiveAccentColor: Int = 0
-    protected var mSquareActiveAccentColor: Int = 0
+    private val squareActiveAccentPaint: Paint
+    private val squareInactiveAccentPaint: Paint
+    private var myTypeface: Typeface? = null
+    private var textSize: Int = 0
+    private var squareInactiveAccentColor: Int = 0
+    private var squareActiveAccentColor: Int = 0
 
     /**
      * The four squares
      */
-    protected val mRectBkg = Rect()
+    private val backgroundRect = Rect()
 
-    protected val mSquareBackgroundColor: Int
+    private val squareBackgroundColor: Int
 
-    protected val mSquareBackgroundPaint: Paint
-    protected val mSquareStrokeBackgroundActivePaint: Paint
-    protected val mSquareStrokeBackgroundInactivePaint: Paint
+    private val squareBackgroundPaint: Paint
+    private val squareStrokeBackgroundActivePaint: Paint
+    private val squareStrokeBackgroundInactivePaint: Paint
 
-    protected var mSquareRadius: Int = 0
-    protected var mSquarePadding: Int = 0
-    protected var mSquareTextPadding: Int = 0
-    protected var mSquareStrokeWidth: Int = 0
-    protected var mProgressStrokeWidth: Int = 0
+    private var squareRadius: Int = 0
+    private var squarePadding: Int = 0
+    private var squareTextPadding: Int = 0
+    private var squareStrokeWidth: Int = 0
+    private var progressStrokeWidth: Int = 0
 
-    protected val mPressedSquares: Array<BooleanArray>
+    private val pressedSquares: Array<BooleanArray>
 
-    private var mPrgressBeatgrid: Array<FloatArray>
+    private var progressBeatGrid: Array<FloatArray>
 
     /**
      * The [SquaresView.OnSquareChangedListener] to handle selection state.
      */
-    private var mOnSquareChangedListener: OnSquareChangedListener? = null
-    private val mTempRect = RectF()
+    private var onSquareChangedListener: OnSquareChangedListener? = null
+    private val tempRect = RectF()
 
     init {
         val res = resources
 
-        mTextSize = res.getDimensionPixelSize(R.dimen.pad_text_size)
+        textSize = res.getDimensionPixelSize(R.dimen.pad_text_size)
 
-        mSquareBackgroundColor = ContextCompat.getColor(context, R.color.roll_pad_square_background)
-        mSquareActiveAccentColor = ContextCompat.getColor(context, R.color.primary_color_deck_A)
-        mSquareInactiveAccentColor = ContextCompat.getColor(context, R.color.roll_pad_square_accent_inactive)
+        squareBackgroundColor = ContextCompat.getColor(context, R.color.roll_pad_square_background)
+        squareActiveAccentColor = ContextCompat.getColor(context, R.color.primary_color_deck_A)
+        squareInactiveAccentColor = ContextCompat.getColor(context, R.color.roll_pad_square_accent_inactive)
 
-        mSquarePadding = res.getDimensionPixelSize(R.dimen.pad_square_padding)
-        mSquareTextPadding = res.getDimensionPixelSize(R.dimen.pad_square_text_padding)
-        mSquareRadius = res.getDimensionPixelSize(R.dimen.pad_square_radius)
-        mSquareStrokeWidth = res.getDimensionPixelSize(R.dimen.pad_square_stroke_width)
+        squarePadding = res.getDimensionPixelSize(R.dimen.pad_square_padding)
+        squareTextPadding = res.getDimensionPixelSize(R.dimen.pad_square_text_padding)
+        squareRadius = res.getDimensionPixelSize(R.dimen.pad_square_radius)
+        squareStrokeWidth = res.getDimensionPixelSize(R.dimen.pad_square_stroke_width)
 
-        mProgressStrokeWidth = res.getDimensionPixelSize(R.dimen.beatgrid_progress_stroke_width)
+        progressStrokeWidth = res.getDimensionPixelSize(R.dimen.beatgrid_progress_stroke_width)
 
         myTypeface = Typeface.createFromAsset(getContext().assets, "fonts/$DEFAULT_FONT")
 
-        mPressedSquares = Array(NB_COLUMN) { BooleanArray(NB_LINE) }
-        mPrgressBeatgrid = Array(NB_COLUMN) { FloatArray(NB_LINE) }
+        pressedSquares = Array(NB_COLUMN) { BooleanArray(NB_LINE) }
+        progressBeatGrid = Array(NB_COLUMN) { FloatArray(NB_LINE) }
 
-        mSquareBackgroundPaint = Paint()
-        mSquareBackgroundPaint.color = mSquareBackgroundColor
-        mSquareBackgroundPaint.isAntiAlias = true
+        squareBackgroundPaint = Paint()
+        squareBackgroundPaint.color = squareBackgroundColor
+        squareBackgroundPaint.isAntiAlias = true
 
-        mSquareStrokeBackgroundInactivePaint = Paint()
-        mSquareStrokeBackgroundInactivePaint.isAntiAlias = true
-        mSquareStrokeBackgroundInactivePaint.strokeWidth = mSquareStrokeWidth.toFloat()
-        mSquareStrokeBackgroundInactivePaint.style = Paint.Style.STROKE
-        mSquareStrokeBackgroundInactivePaint.color = mSquareInactiveAccentColor
+        squareStrokeBackgroundInactivePaint = Paint()
+        squareStrokeBackgroundInactivePaint.isAntiAlias = true
+        squareStrokeBackgroundInactivePaint.strokeWidth = squareStrokeWidth.toFloat()
+        squareStrokeBackgroundInactivePaint.style = Paint.Style.STROKE
+        squareStrokeBackgroundInactivePaint.color = squareInactiveAccentColor
 
-        mSquareStrokeBackgroundActivePaint = Paint(mSquareStrokeBackgroundInactivePaint)
-        mSquareStrokeBackgroundActivePaint.color = mSquareActiveAccentColor
+        squareStrokeBackgroundActivePaint = Paint(squareStrokeBackgroundInactivePaint)
+        squareStrokeBackgroundActivePaint.color = squareActiveAccentColor
 
         // Texts
-        mSquareActiveAccentPaint = Paint()
-        mSquareActiveAccentPaint.color = mSquareActiveAccentColor
-        mSquareActiveAccentPaint.textAlign = Paint.Align.LEFT
-        mSquareActiveAccentPaint.textSize = mTextSize.toFloat()
-        mSquareActiveAccentPaint.typeface = myTypeface
-        mSquareActiveAccentPaint.isAntiAlias = true
+        squareActiveAccentPaint = Paint()
+        squareActiveAccentPaint.color = squareActiveAccentColor
+        squareActiveAccentPaint.textAlign = Paint.Align.LEFT
+        squareActiveAccentPaint.textSize = textSize.toFloat()
+        squareActiveAccentPaint.typeface = myTypeface
+        squareActiveAccentPaint.isAntiAlias = true
 
-        mSquareActiveAccentPaint.strokeWidth = mProgressStrokeWidth.toFloat()
-        mSquareActiveAccentPaint.strokeCap = Paint.Cap.ROUND
+        squareActiveAccentPaint.strokeWidth = progressStrokeWidth.toFloat()
+        squareActiveAccentPaint.strokeCap = Paint.Cap.ROUND
 
-        mSquareInactiveAccentPaint = Paint(mSquareActiveAccentPaint)
-        mSquareInactiveAccentPaint.color = mSquareInactiveAccentColor
+        squareInactiveAccentPaint = Paint(squareActiveAccentPaint)
+        squareInactiveAccentPaint.color = squareInactiveAccentColor
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
-        mWidth = measuredWidth - paddingLeft - paddingRight
-        mHeight = measuredHeight - paddingTop - paddingBottom
+        widthInternal = measuredWidth - paddingLeft - paddingRight
+        heightInternal = measuredHeight - paddingTop - paddingBottom
 
-        mRectBkg.set(paddingLeft, paddingTop, paddingLeft + mWidth, paddingTop + mHeight)
+        backgroundRect.set(paddingLeft, paddingTop, paddingLeft + widthInternal, paddingTop + heightInternal)
 
-        mWidthSquare = ((mWidth - (NB_COLUMN - 1) * mSquarePadding) / NB_COLUMN).toFloat()
-        mHeightSquare = ((mHeight - (NB_LINE - 1) * mSquarePadding) / NB_LINE).toFloat()
+        widthSquare = ((widthInternal - (NB_COLUMN - 1) * squarePadding) / NB_COLUMN).toFloat()
+        heightSquare = ((heightInternal - (NB_LINE - 1) * squarePadding) / NB_LINE).toFloat()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -153,47 +153,33 @@ class SquaresView @JvmOverloads constructor(
         var right: Float
         var bottom: Float
         for (column in 0 until NB_COLUMN) {
-            left = mRectBkg.left + column * (mWidthSquare + mSquarePadding)
-            right = left + mWidthSquare
+            left = backgroundRect.left + column * (widthSquare + squarePadding)
+            right = left + widthSquare
             for (line in 0 until NB_LINE) {
-                top = mRectBkg.top + line * (mHeightSquare + mSquarePadding)
-                bottom = top + mHeightSquare
+                top = backgroundRect.top + line * (heightSquare + squarePadding)
+                bottom = top + heightSquare
                 drawRect(canvas, left, top, right, bottom, column, line)
-                drawProgressBar(canvas, left, top, right, column, line, mPrgressBeatgrid)
+                drawProgressBar(canvas, left, top, right, column, line, progressBeatGrid)
                 canvas.drawText(texts[column][line],
-                    left + mSquareStrokeWidth.toFloat() + mSquareTextPadding.toFloat(),
-                    bottom - mSquareStrokeWidth.toFloat() - mSquareTextPadding.toFloat() - mSquareInactiveAccentPaint.descent(),
-                    if (mPressedSquares[column][line]) mSquareActiveAccentPaint else mSquareInactiveAccentPaint)
+                    left + squareStrokeWidth.toFloat() + squareTextPadding.toFloat(),
+                    bottom - squareStrokeWidth.toFloat() - squareTextPadding.toFloat() - squareInactiveAccentPaint.descent(),
+                    if (pressedSquares[column][line]) squareActiveAccentPaint else squareInactiveAccentPaint)
             }
         }
     }
 
-    protected fun drawRect(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, column: Int, line: Int) {
-        mTempRect.set(left, top, right, bottom)
-        canvas.drawRoundRect(mTempRect, mSquareRadius.toFloat(), mSquareRadius.toFloat(), mSquareBackgroundPaint)
-        canvas.drawRoundRect(mTempRect, mSquareRadius.toFloat(), mSquareRadius.toFloat(),
-            if (mPressedSquares[column][line])
-                mSquareStrokeBackgroundActivePaint
-            else
-                mSquareStrokeBackgroundInactivePaint)
-    }
-
-    protected fun drawProgressBar(canvas: Canvas, left: Float, top: Float, right: Float, column: Int, line: Int, progress: Array<FloatArray>) {
-        val leftPosition = left + mSquareStrokeWidth.toFloat() + mSquareTextPadding.toFloat() + mProgressStrokeWidth / 2f
-        val rightPosition = right - mSquareStrokeWidth.toFloat() - mSquareTextPadding.toFloat() - mProgressStrokeWidth / 2f
-        val topPosition = top + mSquareStrokeWidth.toFloat() + mSquareTextPadding.toFloat() + mProgressStrokeWidth / 2f
-
-        val width = (rightPosition - leftPosition) / 2
-        mTempRect.set(leftPosition,
-            topPosition,
-            leftPosition + width,
-            topPosition)
-        canvas.drawLine(mTempRect.left, mTempRect.top, mTempRect.right, mTempRect.bottom, mSquareInactiveAccentPaint)
-
-        if (progress[column][line] > 0f) {
-            mTempRect.right = mTempRect.left + mTempRect.width() * progress[column][line]
-            canvas.drawLine(mTempRect.left, mTempRect.top, mTempRect.right, mTempRect.bottom, mSquareActiveAccentPaint)
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        val action = event.actionMasked
+        var eventHandled = false
+        when (action) {
+            MotionEvent.ACTION_DOWN,
+            MotionEvent.ACTION_POINTER_DOWN -> eventHandled = handlePointerDown(event)
+            MotionEvent.ACTION_CANCEL,
+            MotionEvent.ACTION_UP,
+            MotionEvent.ACTION_POINTER_UP -> eventHandled = handlePointerUp(event)
         }
+        return eventHandled
     }
 
     /**
@@ -202,7 +188,7 @@ class SquaresView @JvmOverloads constructor(
      * @param onGateChangedListener : The listener to be registered for this view
      */
     fun setOnSquareChangedListener(onGateChangedListener: OnSquareChangedListener?) {
-        mOnSquareChangedListener = onGateChangedListener
+        onSquareChangedListener = onGateChangedListener
     }
 
     /**
@@ -211,9 +197,9 @@ class SquaresView @JvmOverloads constructor(
      * @param accentActiveColor : The accent color when the square activated
      */
     fun setStyle(@ColorInt accentActiveColor: Int) {
-        mSquareActiveAccentColor = accentActiveColor
-        mSquareActiveAccentPaint.color = mSquareActiveAccentColor
-        mSquareStrokeBackgroundActivePaint.color = mSquareActiveAccentColor
+        squareActiveAccentColor = accentActiveColor
+        squareActiveAccentPaint.color = squareActiveAccentColor
+        squareStrokeBackgroundActivePaint.color = squareActiveAccentColor
         invalidate()
     }
 
@@ -222,28 +208,64 @@ class SquaresView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun setPrgressBeatgrid(@FloatRange(from = 0.0, to = 1.0) prgressBeatgrid: Array<FloatArray>) {
-        mPrgressBeatgrid = prgressBeatgrid
+    fun setProgressBeatGrid(
+        @FloatRange(from = 0.0, to = 1.0) progressBeatGrid: Array<FloatArray>
+    ) {
+        this.progressBeatGrid = progressBeatGrid
         invalidate()
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        val action = event.actionMasked
-        var eventHandled = false
-        when (action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> eventHandled = handlePointerDown(event)
-            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> eventHandled = handlePointerUp(event)
-        }
-        return eventHandled
+    private fun drawRect(
+        canvas: Canvas,
+        left: Float,
+        top: Float,
+        right: Float,
+        bottom: Float,
+        column: Int,
+        line: Int
+    ) {
+        tempRect.set(left, top, right, bottom)
+        canvas.drawRoundRect(tempRect, squareRadius.toFloat(), squareRadius.toFloat(), squareBackgroundPaint)
+        canvas.drawRoundRect(tempRect, squareRadius.toFloat(), squareRadius.toFloat(),
+            if (pressedSquares[column][line])
+                squareStrokeBackgroundActivePaint
+            else
+                squareStrokeBackgroundInactivePaint)
     }
 
-    protected fun handlePointerDown(event: MotionEvent): Boolean {
+    private fun drawProgressBar(
+        canvas: Canvas,
+        left: Float,
+        top: Float,
+        right: Float,
+        column: Int,
+        line: Int,
+        progress: Array<FloatArray>
+    ) {
+        val leftPosition = left + squareStrokeWidth.toFloat() + squareTextPadding.toFloat() + progressStrokeWidth / 2f
+        val rightPosition = right - squareStrokeWidth.toFloat() - squareTextPadding.toFloat() - progressStrokeWidth / 2f
+        val topPosition = top + squareStrokeWidth.toFloat() + squareTextPadding.toFloat() + progressStrokeWidth / 2f
+
+        val width = (rightPosition - leftPosition) / 2
+        tempRect.set(leftPosition,
+            topPosition,
+            leftPosition + width,
+            topPosition)
+        canvas.drawLine(tempRect.left, tempRect.top, tempRect.right, tempRect.bottom, squareInactiveAccentPaint)
+
+        if (progress[column][line] > 0f) {
+            tempRect.right = tempRect.left + tempRect.width() * progress[column][line]
+            canvas.drawLine(tempRect.left, tempRect.top, tempRect.right, tempRect.bottom, squareActiveAccentPaint)
+        }
+    }
+
+    private fun handlePointerDown(event: MotionEvent): Boolean {
         val pointer = Pointer()
         pointer.x = event.x
         pointer.y = event.y
         val selectedButton = intersectSquareSelector(event)
         if (selectedButton != null) {
-            mPressedSquares[selectedButton.x][selectedButton.y] = true
+            pressedSquares[selectedButton.x][selectedButton.y] = true
             pointer.setCurrentButton(selectedButton)
             this.notifyListener(selectedButton, true)
             invalidate()
@@ -251,30 +273,30 @@ class SquaresView @JvmOverloads constructor(
         return true
     }
 
-    protected fun handlePointerUp(event: MotionEvent): Boolean {
+    private fun handlePointerUp(event: MotionEvent): Boolean {
         val intersectSquareSelector = intersectSquareSelector(event)
         if (intersectSquareSelector != null) {
-            mPressedSquares[intersectSquareSelector.x][intersectSquareSelector.y] = false
+            pressedSquares[intersectSquareSelector.x][intersectSquareSelector.y] = false
             this.notifyListener(intersectSquareSelector, false)
         }
         invalidate()
         return true
     }
 
-    protected fun intersectSquareSelector(event: MotionEvent): Point? {
+    private fun intersectSquareSelector(event: MotionEvent): Point? {
         // get pointer index from the event object
         val pointerIndex = event.actionIndex
         val pointerX = event.getX(pointerIndex)
         val pointerY = event.getY(pointerIndex)
 
-        if (mRectBkg.contains(pointerX.toInt(), pointerY.toInt())) {
-            val column = (pointerX - mRectBkg.left) / (mRectBkg.width() / NB_COLUMN)
-            if (Math.abs(column - Math.round(column).toFloat()) < mSquarePadding.toFloat() / mWidth.toFloat()) {
+        if (backgroundRect.contains(pointerX.toInt(), pointerY.toInt())) {
+            val column = (pointerX - backgroundRect.left) / (backgroundRect.width() / NB_COLUMN)
+            if (Math.abs(column - Math.round(column).toFloat()) < squarePadding.toFloat() / widthInternal.toFloat()) {
                 return null
             }
 
-            val line = (pointerY - mRectBkg.top) / (mRectBkg.height() / NB_LINE)
-            if (Math.abs(line - Math.round(line).toFloat()) < mSquarePadding.toFloat() / mHeight.toFloat()) {
+            val line = (pointerY - backgroundRect.top) / (backgroundRect.height() / NB_LINE)
+            if (Math.abs(line - Math.round(line).toFloat()) < squarePadding.toFloat() / heightInternal.toFloat()) {
                 return null
             }
 
@@ -290,14 +312,14 @@ class SquaresView @JvmOverloads constructor(
      * Notify the listner about a change in the square selected
      */
     private fun notifyListener(coordinateButton: Point, isChecked: Boolean) {
-        if (mOnSquareChangedListener != null) {
-            mOnSquareChangedListener!!.onSquareCheckedChanged(
+        if (onSquareChangedListener != null) {
+            onSquareChangedListener!!.onSquareCheckedChanged(
                 BEAT_GRID_VALUES[coordinateButton.x][coordinateButton.y],
                 coordinateButton.x, coordinateButton.y, isChecked)
         }
     }
 
-    protected inner class Pointer {
+    private inner class Pointer {
         var x: Float = 0.toFloat()
         var y: Float = 0.toFloat()
         internal var currentButton: Point? = null
@@ -321,40 +343,52 @@ class SquaresView @JvmOverloads constructor(
 
     companion object {
 
-        val BeatGridPreset_A = 0
-        val BeatGridPreset_B = 1
-        val BeatGridPreset_C = 2
-        val BeatGridPreset_D = 3
-        val BeatGridPreset_E = 4
-        val BeatGridPreset_F = 5
-        val BeatGridPreset_G = 6
-        val BeatGridPreset_H = 7
-        val BeatGridPreset_I = 8
-        val BeatGridPreset_J = 9
-        val BeatGridPreset_K = 10
-        val BeatGridPreset_L = 11
+        private const val BeatGridPreset_A = 0
+        private const val BeatGridPreset_B = 1
+        private const val BeatGridPreset_C = 2
+        private const val BeatGridPreset_D = 3
+        private const val BeatGridPreset_E = 4
+        private const val BeatGridPreset_F = 5
+        private const val BeatGridPreset_G = 6
+        private const val BeatGridPreset_H = 7
+        private const val BeatGridPreset_I = 8
+        private const val BeatGridPreset_J = 9
+        private const val BeatGridPreset_K = 10
+        private const val BeatGridPreset_L = 11
 
-        internal val NB_LINE = 4
-        internal val NB_COLUMN = 3
-
-        /**
-         * The string values for the BEATGRID FX
-         */
-        val TEXT_BUTTONS_A = arrayOf(arrayOf("A-0", "A-3", "A-6", "A-9"), arrayOf("A-1", "A-4", "A-7", "A-10"), arrayOf("A-2", "A-5", "A-8", "A-11"))
+        internal const val NB_LINE = 4
+        internal const val NB_COLUMN = 3
 
         /**
          * The string values for the BEATGRID FX
          */
-        val TEXT_BUTTONS_B = arrayOf(arrayOf("B-0", "B-3", "B-6", "B-9"), arrayOf("B-1", "B-4", "B-7", "B-10"), arrayOf("B-2", "B-5", "B-8", "B-11"))
+        val TEXT_BUTTONS_A = arrayOf(
+            arrayOf("A-0", "A-3", "A-6", "A-9"),
+            arrayOf("A-1", "A-4", "A-7", "A-10"),
+            arrayOf("A-2", "A-5", "A-8", "A-11")
+        )
+
+        /**
+         * The string values for the BEATGRID FX
+         */
+        val TEXT_BUTTONS_B = arrayOf(
+            arrayOf("B-0", "B-3", "B-6", "B-9"),
+            arrayOf("B-1", "B-4", "B-7", "B-10"),
+            arrayOf("B-2", "B-5", "B-8", "B-11")
+        )
 
         /**
          * The id values for the BEATGRID FX
          */
-        private val BEAT_GRID_VALUES = arrayOf(intArrayOf(BeatGridPreset_A, BeatGridPreset_D, BeatGridPreset_G, BeatGridPreset_J), intArrayOf(BeatGridPreset_B, BeatGridPreset_E, BeatGridPreset_H, BeatGridPreset_K), intArrayOf(BeatGridPreset_C, BeatGridPreset_F, BeatGridPreset_I, BeatGridPreset_L))
+        private val BEAT_GRID_VALUES = arrayOf(
+            intArrayOf(BeatGridPreset_A, BeatGridPreset_D, BeatGridPreset_G, BeatGridPreset_J),
+            intArrayOf(BeatGridPreset_B, BeatGridPreset_E, BeatGridPreset_H, BeatGridPreset_K),
+            intArrayOf(BeatGridPreset_C, BeatGridPreset_F, BeatGridPreset_I, BeatGridPreset_L)
+        )
 
         /**
          * The default typo
          */
-        private val DEFAULT_FONT = "Montserrat-Regular.ttf"
+        private const val DEFAULT_FONT = "Montserrat-Regular.ttf"
     }
 }

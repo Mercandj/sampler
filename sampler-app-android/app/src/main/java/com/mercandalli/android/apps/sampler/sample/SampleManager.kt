@@ -52,5 +52,4 @@ interface SampleManager {
             "wav/shape-of-you/dpm_shape_of_you_b_snare_01.wav",
             "wav/shape-of-you/dpm_shape_of_you_b_vox_01.wav")
     }
-
 }

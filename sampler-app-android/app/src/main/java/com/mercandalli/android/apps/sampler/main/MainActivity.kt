@@ -1,9 +1,9 @@
 package com.mercandalli.android.apps.sampler.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.mercandalli.android.apps.sampler.R
 import com.mercandalli.android.apps.sampler.pad.SquaresView
 import com.mercandalli.android.apps.sampler.sample.SampleManager
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 selectedX = -1
                 selectedY = -1
             }
-            squaresView.setPrgressBeatgrid(progressPercent)
+            squaresView.setProgressBeatGrid(progressPercent)
             postProgress()
         }
     }

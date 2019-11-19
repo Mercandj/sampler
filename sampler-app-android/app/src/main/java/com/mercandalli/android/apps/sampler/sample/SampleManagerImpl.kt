@@ -31,5 +31,4 @@ internal class SampleManagerImpl : SampleManager {
     override fun mapPositionToPath(positionClicked: Int): String {
         return getCurrentSamples()[positionClicked]
     }
-
 }

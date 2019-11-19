@@ -18,26 +18,30 @@ internal class SoundPoolAudioManager(
     )
 
     @SuppressLint("UseSparseArrays")
-    private var loaded = HashMap<Int, Boolean>()
-    private var slots = HashMap<String, Int>()
+    private var streamIdToLoaded = HashMap<Int, Boolean>()
+    private var streamIds = HashMap<String, Int>()
 
     override fun load(assetsFilePaths: List<String>) {
         for (assetsFilePath in assetsFilePaths) {
-            slots[assetsFilePath] = loadSound(assetsFilePath)
+            streamIds[assetsFilePath] = loadSound(assetsFilePath)
         }
     }
 
     override fun play(assetsFilePath: String) {
-        if (loaded.containsKey(slots[assetsFilePath]) && loaded[slots[assetsFilePath]]!!) {
-            soundPool.play(slots[assetsFilePath]!!, 1F, 1F, 1, 0, 1f)
-        }
+        val streamId = getLoadedStreamId(assetsFilePath) ?: return
+        soundPool.play(streamId, 1F, 1F, 1, 0, 1f)
+    }
+
+    override fun stop(assetsFilePath: String) {
+        val streamId = getLoadedStreamId(assetsFilePath) ?: return
+        soundPool.stop(streamId)
     }
 
     @Suppress("ObjectLiteralToLambda")
     private fun loadSound(strSound: String): Int {
         soundPool.setOnLoadCompleteListener(object : SoundPool.OnLoadCompleteListener {
-            override fun onLoadComplete(soundPool: SoundPool?, sampleId: Int, status: Int) {
-                loaded[sampleId] = true
+            override fun onLoadComplete(soundPool: SoundPool?, streamId: Int, status: Int) {
+                streamIdToLoaded[streamId] = true
             }
         })
         try {
@@ -46,5 +50,21 @@ internal class SoundPoolAudioManager(
             Log.e("SoundPoolAudioManager", "load error", e)
         }
         return -1
+    }
+
+    // Null if not loaded
+    private fun getLoadedStreamId(assetsFilePath: String): Int? {
+        if (!isLoaded(assetsFilePath)) {
+            return null
+        }
+        return streamIds[assetsFilePath]!!
+    }
+
+    private fun isLoaded(assetsFilePath: String): Boolean {
+        val streamId = streamIds[assetsFilePath]
+        if (!streamIdToLoaded.containsKey(streamId)) {
+            return false
+        }
+        return streamIdToLoaded[streamIds[assetsFilePath]]!!
     }
 }
