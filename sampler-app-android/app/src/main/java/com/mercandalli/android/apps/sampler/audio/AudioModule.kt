@@ -7,7 +7,7 @@ class AudioModule(
 ) {
 
     @Suppress("ConstantConditionIf")
-    fun provideAudioManager(): AudioManager {
+    fun createAudioManager(): AudioManager {
         return if (NativeAudioManager) {
             NativeAudioManager(context)
         } else {

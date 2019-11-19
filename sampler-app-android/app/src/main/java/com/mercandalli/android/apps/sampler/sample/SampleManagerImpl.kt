@@ -25,7 +25,11 @@ internal class SampleManagerImpl : SampleManager {
     }
 
     override fun getCurrentSamples(): List<String> {
-        return if (currentDeck == DECK_A) deckASamples else deckBSamples
+        return if (currentDeck == DECK_A) {
+            deckASamples
+        } else {
+            deckBSamples
+        }
     }
 
     override fun mapPositionToPath(positionClicked: Int): String {

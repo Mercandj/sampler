@@ -2,7 +2,7 @@ package com.mercandalli.android.apps.sampler.sample
 
 class SampleModule {
 
-    fun provideSampleManager(): SampleManager {
+    fun createSampleManager(): SampleManager {
         return SampleManagerImpl()
     }
 }

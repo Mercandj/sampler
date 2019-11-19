@@ -10,10 +10,11 @@ class MainGraph private constructor(
     context: Context
 ) {
 
-    private val audioManager: AudioManager = AudioModule(context).provideAudioManager()
-    private val sampleManager: SampleManager = SampleModule().provideSampleManager()
+    private val audioManager: AudioManager = AudioModule(context).createAudioManager()
+    private val sampleManager: SampleManager = SampleModule().createSampleManager()
 
     companion object {
+
         private var mainGraph: MainGraph? = null
 
         @JvmStatic

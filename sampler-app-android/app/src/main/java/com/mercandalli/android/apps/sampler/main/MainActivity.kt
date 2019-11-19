@@ -43,8 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         squaresView = findViewById(R.id.activity_main_squares_view)
         squaresView.setOnSquareChangedListener(object : SquaresView.OnSquareChangedListener {
-            override fun onSquareCheckedChanged(idButton: Int, x: Int, y: Int, isChecked: Boolean) {
-                if (isChecked) {
+            override fun onSquareCheckedChanged(idButton: Int, x: Int, y: Int, checked: Boolean) {
+                if (checked) {
                     progressPercent = Array(SquaresView.NB_COLUMN) { FloatArray(SquaresView.NB_LINE) }
                     selectedX = x
                     selectedY = y
@@ -71,13 +71,33 @@ class MainActivity : AppCompatActivity() {
         when (currentDeck) {
             DECK_A -> {
                 squaresView.setStyle(deckAColor)
-                squaresView.setTexts(SquaresView.TEXT_BUTTONS_A)
+                squaresView.setTexts(object : SquaresView.TextAddOn {
+                    override fun getText(
+                        column: Int,
+                        columnSize: Int,
+                        line: Int,
+                        lineSize: Int
+                    ): String {
+                        val index = line + column * lineSize
+                        return "A-$index"
+                    }
+                })
                 buttonSelectionA.setTextColor(deckAColor)
                 buttonSelectionB.setTextColor(textColor)
             }
             DECK_B -> {
                 squaresView.setStyle(deckBColor)
-                squaresView.setTexts(SquaresView.TEXT_BUTTONS_B)
+                squaresView.setTexts(object : SquaresView.TextAddOn {
+                    override fun getText(
+                        column: Int,
+                        columnSize: Int,
+                        line: Int,
+                        lineSize: Int
+                    ): String {
+                        val index = line + column * lineSize
+                        return "B-$index"
+                    }
+                })
                 buttonSelectionA.setTextColor(textColor)
                 buttonSelectionB.setTextColor(deckBColor)
             }
